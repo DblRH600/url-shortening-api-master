@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+    <meta
+      name="description"
+      content="A Frontend Mentor project used to create a shortened version for lengthy urls"
+    />
+
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <!-- <script type="module" src="./assets/js/secrets.js" defer></script> -->
+    <script type="module" src="./assets/js/script.js" defer></script>
+
+    <title>Frontend Mentor | Shortly URL shortening API Challenge</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  </head>
+  <body>
+    <!-- header section with nav-bar -->
+    <header class="header" id="header">
+      <!-- nav-bar -->
+      <div class="container">
+        <div class="menu" id="menu">
+          <nav class="mobile-nav" id="mobile-nav">
+            <div class="logo">
+              <img
+                class="header-logo"
+                src="./assets/images/logo.svg"
+                alt="logo"
+              />
+            </div>
+
+            <ul class="nav-list">
+              <li class="list">
+                <a href="#" class="list-link">Features</a>
+              </li>
+              <li class="list">
+                <a href="#" class="list-link">Pricing</a>
+              </li>
+              <li class="list">
+                <a href="#" class="list-link">Resources</a>
+              </li>
+            </ul>
+
+            <div class="menu-actions" id="menu-actions">
+              <a href="#" class="login-btn btn">Log In</a>
+              <a href="#" class="signup-btn btn">Sign Up</a>
+            </div>
+
+            <button class="btn palce-items-center screen-lg-hidden menu-btn" id="menu-btn">
+              <i class="ri-menu-line open-menu-icon"></i>
+              <i class="ri-close-line close-menu-icon"></i>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- hero section -->
+      <div class="hero-section">
+        <div class="container">
+          <div class="hero">
+            <div class="left">
+              <h1 class="hero-title">More than just shorter links</h1>
+              <p class="hero-comment">
+                Build your brand&#39;s recognition and get detailed insights on
+                how your links are performing.
+              </p>
+              <button id="hero-btn" class="hero-btn">Get Started</button>
+            </div>
+
+            <div class="hero-image">
+              <img
+                src="./assets/images/illustration-working.svg"
+                alt="A person sitting at their desk clicking through websites."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- url section -->
+      <section id="url-section-container" class="url-section-container">
+        <div class="url-container">
+          <input
+            type="text"
+            class="url-input"
+            id="url-input"
+            placeholder=" Shorten a link here..."
+            required
+          />
+          <span id="error-message" class="error-message"
+            >Please enter a URL link</span
+          >
+          <button id="url-btn" class="url-btn">Shorten It&#33;</button>
+        </div>
+      </section>
+
+      <!-- advanced statistics section -->
+      <section class="statistics-container container">
+        <div class="container">
+          <div id="urlOutput" class="urlOutput">
+            <!-- return dynamically displayed here -->
+          </div>
+
+          <div class="statistics-text">
+            <h2 class="statistics-title">Advanced Statistics</h2>
+            <p class="statistics-comment">
+              Track how your links are performing across the web with our
+              advanced statistics dashboard.
+            </p>
+          </div>
+
+          <div class="statistics-card" id="statistics-card">
+            <div class="statistic brand-recognition" id="statistic">
+              <img
+                src="./assets/images/icon-brand-recognition.svg"
+                alt="graph"
+                class="statistic-image"
+              />
+              <h3 class="statistic-subtitle">Brand Recognition</h3>
+              <p class="statistic-paragraph">
+                Boost your brand recognition with each click. Generic links
+                don&#39;t mean a thing. Branded links help instil confidence in
+                your content.
+              </p>
+            </div>
+
+            <div class="statistic detailed-records" id="statistic">
+              <img
+                src="./assets/images/icon-detailed-records.svg"
+                alt="timer"
+                class="statistic-image"
+              />
+              <h3 class="statistic-subtitle">Detailed Records</h3>
+              <p class="statistic-paragraph">
+                Gain insights into who is clicking your links. Knowing when and
+                where people engage with your content helps inform better
+                decisions.
+              </p>
+            </div>
+
+            <div class="statistic fully-customizable" id="statistic">
+              <img
+                src="./assets/images/icon-fully-customizable.svg"
+                alt="drawing utensils"
+                class="statistic-image"
+              />
+              <h3 class="statistic-subtitle">Fully Customizable</h3>
+              <p class="statistic-paragraph">
+                Improve brand awareness and content discoverability through
+                customizable links, supercharging audience engagement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- pre-footer section -->
+      <section class="boost-container container">
+        <h2 class="boost-title">Boost your links today</h2>
+        <button class="boost-btn" id="hero-btn">Get Started</button>
+      </section>
+    </main>
+
+    <!-- footer section -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-section">
+            <div class="footer-logo-container">
+              <img
+                src="./assets/images/logo.svg"
+                alt="logo"
+                class="footer-logo"
+              />
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Features</h4>
+            <ul class="list feature-list">
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="feature-link list-name">Link Shortening</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="feature-link list-name">Branded Links</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="feature-link list-name">Analytics</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Resources</h4>
+            <ul class="list resource-list">
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="resource-link list-name">Blog</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="resource-link list-name">Developers</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="resource-link list-name">Support</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-title">Company</h4>
+            <ul class="list company-list">
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="company-link list-name">About</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="company-link list-name">Our Team</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="company-link list-name">Careers</span>
+                </a>
+              </li>
+              <li class="list-item">
+                <a href="#" class="list-link">
+                  <span class="company-link list-name">Contact</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-section footer-container">
+            <div class="social-media">
+              <ul class="list social-media-list">
+                <li id="social-list" class="list-item">
+                  <a href="#" class="list-link">
+                    <i class="ri-facebook-circle-line"></i>
+                  </a>
+                </li>
+                <li id="social-list" class="list-item">
+                  <a href="#" class="list-link">
+                    <i class="ri-twitter-line"></i>
+                  </a>
+                </li>
+                <li id="social-list" class="list-item">
+                  <a href="#" class="list-link">
+                    <i class="ri-pinterest-line"></i>
+                  </a>
+                </li>
+                <li id="social-list" class="list-item">
+                  <a href="#" class="list-link">
+                    <i class="ri-instagram-line"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="attribution">
+      <span class="copyright">&copy; 2025</span>
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Rico Haywood</a>.
+    </div>
+  </body>
+</html>

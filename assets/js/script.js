@@ -1,0 +1,139 @@
+// import API_KEY/Token
+// import { token } from '../js/secrets' ??-404 error trying to read secrets file?
+const token = '287dd8fc75980c43beee2bf866c727a4fab1eefa'
+
+// define variables to connect/use with functions
+const urlInput = document.getElementById('url-input')
+const errorMessage = document.getElementById('error-message')
+const enableBtn = document.getElementById('url-btn')
+const urlOutput = document.getElementById('urlOutput')
+
+function getUrlInput () {
+  return urlInput.value.trim().toLowerCase()
+}
+
+// api fetch function
+async function createURL (urlLink) {
+  const apiURL = 'https://api-ssl.bitly.com/v4/shorten'
+
+  const res = await fetch(apiURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // application/x-www-form-urlencoded
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      long_url: urlLink
+      //  body:  new URLSearchParams({
+      // long_url domain: "bit.ly",
+      // group_guid: "Ba1bc23dE4F",
+    })
+  })
+
+  if (res.ok) {
+    const data = await res.json()
+    displayToURLHistory(urlLink, data)
+
+    errorMessage.textContent = ''
+  } else {
+    const errorData = await res.json()
+
+    errorMessage.textContent = errorData.message || 'Failed to shorten URL'
+    console.error(`Error attempting to shorten URL: ${res.statusText}`)
+  }
+
+  // console.log(data)
+}
+
+// createURL()
+
+function isValidURL (url) {
+  try {
+    new URL(url)
+    return true
+  } catch (_) {
+    return false
+  }
+}
+
+// isValidURL()
+
+function displayToURLHistory (originalURL, urlData) {
+  const urlItem = document.createElement('div')
+  urlItem.classList.add('item')
+
+  urlItem.innerHTML = `
+    <p class='original-url'>${originalURL}</p>
+    
+    <hr>
+    
+    <div class='short-url'>
+      <p>${urlData.link}</p>
+      <button class='copy-url-btn'>Copy</button>
+    </div>`
+
+  urlOutput.appendChild(urlItem)
+
+  urlItem.querySelector('.copy-url-btn').addEventListener('click', e => {
+    let copyURL = urlData.link
+    navigator.clipboard.writeText(copyURL)
+
+    e.target.style.backgroundColor = 'var(--neutral-color-dark-2)'
+    e.target.textContent = 'Copied!'
+
+    setTimeout(() => {
+      e.target.style.backgroundColor = 'var(--primary-color-1)'
+      e.target.textContent = 'Copy'
+    }, 2000)
+  })
+}
+
+enableBtn.addEventListener('click', () => {
+  let userURL = getUrlInput()
+
+  if (!userURL || !isValidURL(userURL)) {
+    errorMessage.classList.add('error')
+    urlInput.classList.add('error')
+  } else {
+    errorMessage.classList.remove('error')
+    urlInput.classList.remove('error')
+    urlInput.value = ''
+    urlOutput.classList.add('activate')
+    createURL(userURL)
+  }
+})
+
+// Grab elements -- acknowledgement to John from 'Coding Addict'
+const selectElement = selector => {
+  const element = document.querySelector(selector)
+  if (element) return element
+  throw new Error(
+    `Something went wrong, make sure that ${selector} exists; or is typed correctly`
+  )
+}
+
+// console.log(selectElement('.navbar'))
+
+//Nav styles on scroll
+const scrollHeader = () => {
+  const headerElement = selectElement('#header')
+  if (window.scrollY >= 15) {
+    headerElement.classList.add('activated')
+  } else {
+    headerElement.classList.remove('activated')
+  }
+}
+
+window.addEventListener('scroll', scrollHeader)
+
+// Open menu & search pop-up
+const menuToggle = selectElement('#menu-btn')
+
+const toggleMenu = () => {
+  const mobileMenu = selectElement('#menu')
+  mobileMenu.classList.toggle('activated')
+  menuToggle.classList.toggle('activated')
+}
+
+menuToggle.addEventListener('click', toggleMenu)
