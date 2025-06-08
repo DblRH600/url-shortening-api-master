@@ -34,11 +34,11 @@ Users should be able to:
 
 ### Screenshot
 
-![](../url-shortening-api-master/assets/images/Solution_Desktop.jpg)
+![](./assets/images/Solution_Desktop.jpg)
 
-![](../url-shortening-api-master/assets/images/Solution_Mobile.jpg)
+![](./assets/images/Solution_Mobile.jpg)
 
-![](../url-shortening-api-master/assets/images/Solution_Mobile_1.jpg)
+![](./assets/images/Solution_Mobile_1.jpg)
 
 ### Links
 
