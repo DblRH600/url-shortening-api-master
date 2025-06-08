@@ -15,8 +15,6 @@ This is a solution to the [Shortly URL shortening API Challenge challenge on Fro
   - [Useful resources](#useful-resources)
 - [Acknowledgments](#acknowledgments)
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
-
 ## Overview
 
 Integrate with the [bitly](https://app.bitly.com/) URL shortening API and play with browser storage in this landing page challenge.
@@ -36,16 +34,18 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](../url-shortening-api-master/assets/images/Solution_Desktop.jpg)
 
-![](./screenshot.jpg)
+![](../url-shortening-api-master/assets/images/Solution_Mobile.jpg)
 
-![](./screenshot.jpg)
+![](../url-shortening-api-master/assets/images/Solution_Mobile_1.jpg)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [GitHub: url-shortening-api-master](https://github.com/DblRH600/url-shortening-api-master)
 - Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+
+**Note:** Monthly limit is ***5*** Links. All were used trying to test the site.
 
 ## My process
 
@@ -168,19 +168,18 @@ async function createURL (urlLink) {
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+Encountered an error importing the token from a separate **.js** file; I want to research further to understand why the token could not be imported. 
 
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+Had trouble getting the ***menu button*** to work when the screen is small. A better understanding of **click events**, **addEventListners**, and connecting **functions** to HTML when using ***hidden elements***.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [MDN](https://developer.mozilla.org/en-US/) - MDN was useful in understanding the meaning of **elements**, **methods**, **functions**, and how they should be used / implemented.
 
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [w3schools](https://www.w3schools.com/) - w3schools was useful in understanding how to style **elements** and **functions** utilizing CSS coding and JavaScript coding.
+
+- [Documentation: The Bitly API](https://dev.bitly.com/?_gl=1*18syhe2*_gcl_au*MzI4MzI3MzM5LjE3NDkyMjY0MzcuMTcwMTE2NjY1NC4xNzQ5MjI5MTQ3LjE3NDkyMjkyMTE.) - This is site helped with my understanding of how to use the API for this website.
 
 ## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+I want express aprpeciation to Abraham Tavarez for helping me to understand how to connect the ***API Token*** from *bitly.com*. 

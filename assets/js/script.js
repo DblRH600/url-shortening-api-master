@@ -113,7 +113,7 @@ const selectElement = selector => {
   )
 }
 
-// console.log(selectElement('.navbar'))
+// console.log(selectElement('.mobile-nav'))
 
 //Nav styles on scroll
 const scrollHeader = () => {

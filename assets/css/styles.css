@@ -339,6 +339,7 @@ button:hover {
 /* footer section */
 footer {
   background-color: var(--neutral-color-dark-2);
+  margin: 0 3.40rem;
   padding: 4rem;
   color: var(--neutral-color-light-1);
 }
