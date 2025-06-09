@@ -1,6 +1,7 @@
 // import API_KEY/Token
 // import { token } from '../js/secrets' ??-404 error trying to read secrets file?
 const token = '287dd8fc75980c43beee2bf866c727a4fab1eefa'
+const maxSearches = 5
 
 // define variables to connect/use with functions
 const urlInput = document.getElementById('url-input')
@@ -12,9 +13,34 @@ function getUrlInput () {
   return urlInput.value.trim().toLowerCase()
 }
 
+// local storage interaction
+function saveURLToLocalStorage (originalURL, shortenedURL) {
+  const savedURLs = JSON.parse(localStorage.getItem('urlHistory')) || []
+  savedURLs.push({original: originalURL, short: shortenedURL})
+  localStorage.setItem('urlHistory', JSON.stringify(savedURLs))
+}
+
+function loadURLHistory () {
+  const savedURLs = JSON.parse(localStorage.getItem('urlHistory')) || []
+
+  savedURLs.forEach(entry => {
+    const storedData = {link: entry.short}
+    displayToURLHistory(entry.original, storedData)
+  })
+}
+
 // api fetch function
 async function createURL (urlLink) {
+  resetMonthlySearchLimit()
+  
   const apiURL = 'https://api-ssl.bitly.com/v4/shorten'
+  const currentCount = getSearchCount()
+
+  if (currentCount >= maxSearches) {
+    errorMessage.textContent = 'Monthly limit reached.'
+    updateCountDownDisplay()
+    return
+  }
 
   const res = await fetch(apiURL, {
     method: 'POST',
@@ -34,6 +60,8 @@ async function createURL (urlLink) {
   if (res.ok) {
     const data = await res.json()
     displayToURLHistory(urlLink, data)
+    saveURLToLocalStorage(urlLink, data.link)
+    incrementSearchCount()
 
     errorMessage.textContent = ''
   } else {
@@ -43,11 +71,21 @@ async function createURL (urlLink) {
     console.error(`Error attempting to shorten URL: ${res.statusText}`)
   }
 
+  updateCountDownDisplay()
+
   // console.log(data)
 }
 
 // createURL()
 
+// check & search the DOM for elements to be displayed
+document.addEventListener('DOMContentLoaded', () => {
+  resetMonthlySearchLimit()
+  updateCountDownDisplay()
+  loadURLHistory()
+})
+
+// confirm url is valid
 function isValidURL (url) {
   try {
     new URL(url)
@@ -59,6 +97,7 @@ function isValidURL (url) {
 
 // isValidURL()
 
+// create & display url on the page after retrieval
 function displayToURLHistory (originalURL, urlData) {
   const urlItem = document.createElement('div')
   urlItem.classList.add('item')
@@ -137,3 +176,31 @@ const toggleMenu = () => {
 }
 
 menuToggle.addEventListener('click', toggleMenu)
+
+// due to monthly limit create a function to return the count & reset it
+function getSearchCount () {
+  return Number(localStorage.getItem('searchCount') || 0)
+}
+
+function incrementSearchCount () { 
+  localStorage.setItem('searchCount', currentCount + 1)
+  updateCountDownDisplay()
+}
+
+function resetMonthlySearchLimit() {
+  const currentMonth = new Date().getMonth()
+  const savedMonth = localStorage.getItem('searchMonth')
+
+  if (savedMonth === null || Number(savedMonth) !== currentMonth) {
+    localStorage.setItem('searchMonth', currentMonth)
+    localStorage.setItem('searchCount', 0)
+  }
+
+  updateCountDownDisplay()
+}
+
+function updateCountDownDisplay () {
+  const searchesRemaining = maxSearches - getSearchCount()
+  const searchCountdown = document.getElementById('displayed-countdown')
+  searchCountdown.textContent = `There are ${searchesRemaining} of ${maxSearches} shortenings remaining this month.`
+}

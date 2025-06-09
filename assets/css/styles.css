@@ -229,6 +229,11 @@ button:hover {
 .url-section-container .url-container input.error {
   border: 0.13rem solid var(--secondary-color);
 }
+.url-section-container .displayed-countdown {
+  font-size: 1.25rem;
+  color: var(--neutral-color-dark-2);
+  margin: .6rem;
+}
 
 /* url-output section */
 .statistics-container .urlOutput {

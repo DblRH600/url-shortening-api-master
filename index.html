@@ -59,7 +59,10 @@
               <a href="#" class="signup-btn btn">Sign Up</a>
             </div>
 
-            <button class="btn palce-items-center screen-lg-hidden menu-btn" id="menu-btn">
+            <button
+              class="btn palce-items-center screen-lg-hidden menu-btn"
+              id="menu-btn"
+            >
               <i class="ri-menu-line open-menu-icon"></i>
               <i class="ri-close-line close-menu-icon"></i>
             </button>
@@ -94,6 +97,7 @@
 
       <!-- url section -->
       <section id="url-section-container" class="url-section-container">
+        <p class="displayed-countdown" id="displayed-countdown"></p>
         <div class="url-container">
           <input
             type="text"
@@ -102,11 +106,9 @@
             placeholder=" Shorten a link here..."
             required
           />
-          <span id="error-message" class="error-message"
-            >Please enter a URL link</span
-          >
           <button id="url-btn" class="url-btn">Shorten It&#33;</button>
         </div>
+        <span id="error-message" class="error-message"></span>
       </section>
 
       <!-- advanced statistics section -->
