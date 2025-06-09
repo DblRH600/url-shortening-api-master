@@ -16,7 +16,7 @@ function getUrlInput () {
 // local storage interaction
 function saveURLToLocalStorage (originalURL, shortenedURL) {
   const savedURLs = JSON.parse(localStorage.getItem('urlHistory')) || []
-  savedURLs.push({original: originalURL, short: shortenedURL})
+  savedURLs.push({ original: originalURL, short: shortenedURL })
   localStorage.setItem('urlHistory', JSON.stringify(savedURLs))
 }
 
@@ -24,7 +24,7 @@ function loadURLHistory () {
   const savedURLs = JSON.parse(localStorage.getItem('urlHistory')) || []
 
   savedURLs.forEach(entry => {
-    const storedData = {link: entry.short}
+    const storedData = { link: entry.short }
     displayToURLHistory(entry.original, storedData)
   })
 }
@@ -32,46 +32,56 @@ function loadURLHistory () {
 // api fetch function
 async function createURL (urlLink) {
   resetMonthlySearchLimit()
-  
+
   const apiURL = 'https://api-ssl.bitly.com/v4/shorten'
   const currentCount = getSearchCount()
 
   if (currentCount >= maxSearches) {
     errorMessage.textContent = 'Monthly limit reached.'
-    updateCountDownDisplay()
+    updateCountdownDisplay()
     return
   }
 
-  const res = await fetch(apiURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // application/x-www-form-urlencoded
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      long_url: urlLink
-      //  body:  new URLSearchParams({
-      // long_url domain: "bit.ly",
-      // group_guid: "Ba1bc23dE4F",
+  try {
+    const res = await fetch(apiURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // application/x-www-form-urlencoded
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        long_url: urlLink
+        //  body:  new URLSearchParams({
+        // long_url domain: "bit.ly",
+        // group_guid: "Ba1bc23dE4F",
+      })
     })
-  })
 
-  if (res.ok) {
-    const data = await res.json()
-    displayToURLHistory(urlLink, data)
-    saveURLToLocalStorage(urlLink, data.link)
-    incrementSearchCount()
+    if (res.ok) {
+      const data = await res.json()
+      displayToURLHistory(urlLink, data)
+      saveURLToLocalStorage(urlLink, data.link)
+      incrementSearchCount()
 
-    errorMessage.textContent = ''
-  } else {
-    const errorData = await res.json()
+      errorMessage.textContent = ''
+    } else {
+      const errorData = await res.json()
 
-    errorMessage.textContent = errorData.message || 'Failed to shorten URL'
-    console.error(`Error attempting to shorten URL: ${res.statusText}`)
+      if (errorData.message && errorData.message.includes('LIMIT')) {
+        localStorage.setItem('searchCount', maxSearches)
+      }
+
+      errorMessage.textContent = errorData.message || 'Failed to shorten URL'
+      console.error(`Error attempting to shorten URL: ${res.statusText}`)
+    }
+  } catch (err) {
+    errorMessage.textContent =
+      'Network error or API is unreachable at this time.'
+    console.error(err)
   }
 
-  updateCountDownDisplay()
+  updateCountdownDisplay()
 
   // console.log(data)
 }
@@ -81,7 +91,7 @@ async function createURL (urlLink) {
 // check & search the DOM for elements to be displayed
 document.addEventListener('DOMContentLoaded', () => {
   resetMonthlySearchLimit()
-  updateCountDownDisplay()
+  updateCountdownDisplay()
   loadURLHistory()
 })
 
@@ -182,25 +192,50 @@ function getSearchCount () {
   return Number(localStorage.getItem('searchCount') || 0)
 }
 
-function incrementSearchCount () { 
-  localStorage.setItem('searchCount', currentCount + 1)
-  updateCountDownDisplay()
+function incrementSearchCount () {
+  const currentCount = getSearchCount()
+  const newCount = currentCount + 1
+
+  console.log('Incrementing search count to: ', newCount)
+
+  localStorage.setItem('searchCount', newCount)
+  updateCountdownDisplay()
 }
 
-function resetMonthlySearchLimit() {
+function resetMonthlySearchLimit () {
   const currentMonth = new Date().getMonth()
   const savedMonth = localStorage.getItem('searchMonth')
+
+  console.log('Saved month:', savedMonth, 'Current month:', currentMonth)
 
   if (savedMonth === null || Number(savedMonth) !== currentMonth) {
     localStorage.setItem('searchMonth', currentMonth)
     localStorage.setItem('searchCount', 0)
+    console.log('Resetting count for new month')
   }
 
-  updateCountDownDisplay()
+  updateCountdownDisplay()
 }
 
-function updateCountDownDisplay () {
-  const searchesRemaining = maxSearches - getSearchCount()
+function updateCountdownDisplay () {
+  const used = getSearchCount()
+  const searchesRemaining = maxSearches - used
   const searchCountdown = document.getElementById('displayed-countdown')
+  
+  console.log(`used: ${used}, remaining: ${searchesRemaining}`)
+  // default display
   searchCountdown.textContent = `There are ${searchesRemaining} of ${maxSearches} shortenings remaining this month.`
+
+  // reset
+  searchCountdown.style.color = 'var(--neutral-color-dark-2)'
+
+  if (searchesRemaining === 1) {
+    searchCountdown.style.color = 'var(--secondary-color-2)'
+    searchCountdown.textContent += ' - Approaching monthly limit.'
+  }
+
+  if (searchesRemaining === 0) {
+    searchCountdown.style.color = 'var(--secondary-color)'
+    searchCountdown.textContent = `Total number shortentings per month is ${maxSearches}. Limit has been reached or exceeded!`
+  }
 }
