@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
   resetMonthlySearchLimit()
   updateCountdownDisplay()
   loadURLHistory()
+  setupMenuToggle()
+  setupScrollHeader()
 })
 
 // confirm url is valid
@@ -141,7 +143,16 @@ function displayToURLHistory (originalURL, urlData) {
 enableBtn.addEventListener('click', () => {
   let userURL = getUrlInput()
 
-  if (!userURL || !isValidURL(userURL)) {
+  if(!userURL.trim()) {
+    // button clicked with-out entering a url link
+    errorMessage.textContent = 'Pleae enter a URL link.'
+    errorMessage.classList.add('error')
+    urlInput.classList.add('error')
+    return
+  }
+
+  if (!isValidURL(userURL)) {
+    // check for valid url entry
     errorMessage.classList.add('error')
     urlInput.classList.add('error')
   } else {
@@ -153,39 +164,44 @@ enableBtn.addEventListener('click', () => {
   }
 })
 
-// Grab elements -- acknowledgement to John from 'Coding Addict'
-const selectElement = selector => {
-  const element = document.querySelector(selector)
-  if (element) return element
-  throw new Error(
-    `Something went wrong, make sure that ${selector} exists; or is typed correctly`
-  )
-}
-
 // console.log(selectElement('.mobile-nav'))
 
-//Nav styles on scroll
-const scrollHeader = () => {
-  const headerElement = selectElement('#header')
-  if (window.scrollY >= 15) {
-    headerElement.classList.add('activated')
-  } else {
-    headerElement.classList.remove('activated')
+// Grab elements -- acknowledgement to John from 'Coding Addict'
+  const selectElement = selector => {
+    const element = document.querySelector(selector)
+    if (element) return element
+    throw new Error(`Selector: ${selector} not found`)
   }
-}
 
-window.addEventListener('scroll', scrollHeader)
+//Nav styles on scroll
+function setupScrollHeader () {
+  
+  const headerElement = selectElement('#header')
+
+  const scrollHeader = () => {
+    if (window.scrollY >= 15) {
+      headerElement.classList.add('activated')
+    } else {
+      headerElement.classList.remove('activated')
+    }
+  }
+
+  window.addEventListener('scroll', scrollHeader)
+}
 
 // Open menu & search pop-up
-const menuToggle = selectElement('#menu-btn')
-
-const toggleMenu = () => {
+function setupMenuToggle () {
+  
+  const menuToggle = selectElement('#menu-btn')
   const mobileMenu = selectElement('#menu')
-  mobileMenu.classList.toggle('activated')
-  menuToggle.classList.toggle('activated')
-}
 
-menuToggle.addEventListener('click', toggleMenu)
+  const toggleMenu = () => {
+    mobileMenu.classList.toggle('activated')
+    menuToggle.classList.toggle('activated')
+  }
+
+  menuToggle.addEventListener('click', toggleMenu)
+}
 
 // due to monthly limit create a function to return the count & reset it
 function getSearchCount () {
@@ -221,7 +237,7 @@ function updateCountdownDisplay () {
   const used = getSearchCount()
   const searchesRemaining = maxSearches - used
   const searchCountdown = document.getElementById('displayed-countdown')
-  
+
   console.log(`used: ${used}, remaining: ${searchesRemaining}`)
   // default display
   searchCountdown.textContent = `There are ${searchesRemaining} of ${maxSearches} shortenings remaining this month.`
