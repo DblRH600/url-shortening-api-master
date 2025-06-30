@@ -12,6 +12,7 @@ This is a solution to the [Shortly URL shortening API Challenge challenge on Fro
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
+  - [Reflections](#reflections)
   - [Useful resources](#useful-resources)
 - [Acknowledgments](#acknowledgments)
 
@@ -171,6 +172,8 @@ async function createURL (urlLink) {
 Encountered an error importing the token from a separate **.js** file; I want to research further to understand why the token could not be imported. 
 
 Had trouble getting the ***menu button*** to work when the screen is small. A better understanding of **click events**, **addEventListners**, and connecting **functions** to HTML when using ***hidden elements***.
+
+### Reflections
 
 ### Useful resources
 
