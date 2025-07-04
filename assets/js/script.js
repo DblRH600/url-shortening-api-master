@@ -1,6 +1,5 @@
 // import API_KEY/Token
-// import { token } from '../js/secrets' ??-404 error trying to read secrets file?
-const token = '287dd8fc75980c43beee2bf866c727a4fab1eefa'
+import { TOKEN } from "./secrets.js"
 const maxSearches = 5
 
 // define variables to connect/use with functions
@@ -48,7 +47,7 @@ async function createURL (urlLink) {
       headers: {
         'Content-Type': 'application/json',
         // application/x-www-form-urlencoded
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${TOKEN}`
       },
       body: JSON.stringify({
         long_url: urlLink
